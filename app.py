@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Configurarea cheii API pentru Gemini
-API_KEY = "AIzaSyCdCsbY-hjEml-cRvQSeoNSIHO-El_ccIs"  # Înlocuiește cu cheia ta API
+API_KEY = ""  # Înlocuiește cu cheia ta API
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-1.5-pro")
 
