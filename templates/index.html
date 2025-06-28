@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant - NaturaBox</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    .chat-container {
+      max-height: 600px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      border: 2px solid #91cc04;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .chat-message {
+      margin: 12px;
+      padding: 15px;
+      border-radius: 10px;
+      animation: fadeIn 0.5s ease-in;
+      max-width: 80%;
+    }
+    .user-message {
+      background-color: #91cc04;
+      color: #0e4d2f;
+      text-align: right;
+      margin-left: auto;
+    }
+    .bot-message {
+      background-color: #e9ecef;
+      color: #333;
+      margin-right: auto;
+    }
+    .error-message {
+      background-color: #dc3545;
+      color: #fff;
+    }
+    .form-control {
+      border: 2px solid #91cc04;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: #0e4d2f;
+      box-shadow: 0 0 10px rgba(145, 204, 4, 0.5);
+    }
+    .bg-dark-green {
+      background-color: #0e4d2f;
+    }
+    .social-icon {
+      font-size: 1.3rem;
+      transition: color 0.3s ease;
+    }
+    .social-icon:hover {
+      color: #91cc04;
+    }
+    .btn-natura {
+      background-color: #91cc04;
+      color: #0e4d2f;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .btn-natura:hover {
+      background-color: #c7f264;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(145, 204, 4, 0.4);
+    }
+    .section-bg {
+      background: linear-gradient(135deg, #f9f9f9, #e9f7e6);
+      padding: 60px 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .form-control::placeholder {
+      color: #ccc;
+      opacity: 0.8;
+    }
+    .topbar {
+      background-color: #0e4d2f;
+      padding: 10px 0;
+    }
+    .topbar a, .topbar span {
+      color: white;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="icons d-flex align-items-center">
+        <a href="https://www.instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
+        <a href="mailto:info@fuelbox.ro"><i class="bi bi-envelope"></i></a>
+        <span class="text-white ms-3">| 0744 855 543</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg bg-white py-2">
+    <div class="container position-relative">
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center gap-4">
+          <li class="nav-item"><a class="nav-link fw-bold" href="/">ACASĂ</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="/despre">DESPRE</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="/comanda">COMANDĂ</a></li>
+        </ul>
+        <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="/">
+          <div class="d-flex align-items-center">
+            <div class="ms-2 text-center">
+              <strong style="color: #2b6824; font-size: 1.8rem;">Natura</strong><strong style="color:#91cc04; font-size: 1.8rem;">Box</strong>
+            </div>
+          </div>
+        </a>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-4">
+          <li class="nav-item"><a class="nav-link fw-bold" href="/menubox">MENUBOX</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold active" href="/ai-assistant" aria-current="page">AI ASSISTANT</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section-bg">
+    <div class="container" style="max-width: 900px;">
+      <h2 class="text-center fw-bold mb-4" style="color: #0e4d2f;">AI Assistant Nutrițional</h2>
+      <p class="text-center mb-5 text-muted fs-5">Întreabă-ne despre meniuri sănătoase, restricții alimentare sau sfaturi nutriționale personalizate!</p>
+      <div class="chat-container">
+        <div id="chat-messages" class="space-y-2">
+          <div class="chat-message bot-message">
+            Bun venit! Introdu preferințele sau restricțiile tale alimentare (ex. vegetarian, fără gluten, plan de masă pentru o zi).
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex gap-3">
+        <input id="user-input" type="text" class="form-control" placeholder="Ex. Sugerează un prânz vegetarian..." aria-label="Mesaj pentru AI Assistant">
+        <button id="send-btn" class="btn btn-natura">Trimite</button>
+      </div>
+      <p class="text-center text-muted small mt-4">Atenție: Aceste recomandări nu înlocuiesc sfatul unui nutriționist profesionist.</p>
+    </div>
+  </section>
+
+  <script>
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatContainer = document.querySelector('.chat-container');
+
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      const userMessage = document.createElement('div');
+      userMessage.className = 'chat-message user-message';
+      userMessage.textContent = message;
+      chatMessages.appendChild(userMessage);
+      userInput.value = '';
+
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        const response = await fetch('/get_advice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_input: message })
+        });
+        const data = await response.json();
+
+        const botMessage = document.createElement('div');
+        botMessage.className = 'chat-message bot-message';
+        botMessage.textContent = data.advice;
+        chatMessages.appendChild(botMessage);
+
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      } catch (error) {
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'chat-message error-message';
+        errorMessage.textContent = 'Eroare la obținerea răspunsului.';
+        chatMessages.appendChild(errorMessage);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>
